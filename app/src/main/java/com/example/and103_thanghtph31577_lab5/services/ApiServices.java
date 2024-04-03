@@ -2,6 +2,7 @@ package com.example.and103_thanghtph31577_lab5.services;
 
 import com.example.and103_thanghtph31577_lab5.model.Distributor;
 import com.example.and103_thanghtph31577_lab5.model.Fruit;
+import com.example.and103_thanghtph31577_lab5.model.Page;
 import com.example.and103_thanghtph31577_lab5.model.Response;
 import com.example.and103_thanghtph31577_lab5.model.User;
 
@@ -22,15 +23,16 @@ import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface ApiServices {
-    public static String BASE_URL = "http://10.82.0.119:3000/api/";
+    public static String BASE_URL = "http://10.0.2.2:3000/api/";
 
     @GET("get-list-distributor")
-        Call<Response<ArrayList<Distributor>>> getListDistributor();
+    Call<Response<ArrayList<Distributor>>> getListDistributor();
 
     @GET("search-distributor")
-        Call<Response<ArrayList<Distributor>>> searchDistributor(@Query("key") String key);
+    Call<Response<ArrayList<Distributor>>> searchDistributor(@Query("key") String key);
 
     @POST("add-distributor")
     Call<Response<Distributor>> addDistributor(@Body Distributor distributor);
@@ -51,7 +53,7 @@ public interface ApiServices {
             @Part("name") RequestBody name,
             @Part MultipartBody.Part avartar
 
-            );
+    );
 
     @POST("login")
     Call<Response<User>> login (@Body User user);
@@ -63,13 +65,28 @@ public interface ApiServices {
     @POST("add-fruit-with-file-image")
     Call<Response<Fruit>> addFruitWithFileImage(@PartMap Map<String, RequestBody> requestBodyMap,
                                                 @Part ArrayList<MultipartBody.Part> ds_hinh
-                                                );
+    );
 
 
+    @GET("get-page-fruit")
+    Call<Response<Page<ArrayList<Fruit>>>> getPageFruit( @QueryMap Map<String, String> stringMap);
+
+
+    @Multipart
+    @PUT("update-fruit-by-id/{id}")
+    Call<Response<Fruit>> updateFruitWithFileImage(@PartMap Map<String, RequestBody> requestBodyMap,
+                                                   @Path("id") String id,
+                                                   @Part ArrayList<MultipartBody.Part> ds_hinh
+    );
+
+    @DELETE("destroy-fruit-by-id/{id}")
+    Call<Response<Fruit>> deleteFruits(@Path("id") String id);
+
+    @GET("get-fruit-by-id/{id}")
+    Call<Response<Fruit>> getFruitById (@Path("id") String id);
 
 
 
 
 }
-
 

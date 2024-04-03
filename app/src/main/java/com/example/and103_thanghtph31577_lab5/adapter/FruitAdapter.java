@@ -31,6 +31,8 @@ public class FruitAdapter  extends RecyclerView.Adapter<FruitAdapter.ViewHolder>
     public interface FruitClick {
         void delete(Fruit fruit);
         void edit(Fruit fruit);
+
+        void showDetail(Fruit fruit);
     }
 
     @NonNull
@@ -53,6 +55,20 @@ public class FruitAdapter  extends RecyclerView.Adapter<FruitAdapter.ViewHolder>
                 .load(newUrl)
                 .thumbnail(Glide.with(context).load(R.drawable.baseline_broken_image_24))
                 .into(holder.binding.img);
+
+        holder.binding.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fruitClick.edit(fruit);
+            }
+        });
+        holder.binding.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fruitClick.delete(fruit);
+            }
+        });
+
         Log.d("321321", "onBindViewHolder: "+list.get(position).getImage().get(0));
     }
 
